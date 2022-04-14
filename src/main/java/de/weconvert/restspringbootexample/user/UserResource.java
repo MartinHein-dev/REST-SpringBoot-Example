@@ -9,6 +9,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +26,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class UserResource {
 
 	@Autowired
+	MessageSource messageSource;
+
+	@Autowired
 	private UserDaoService service;
- 
+
 	@GetMapping("/users")
 	public List<User> retrieveAllUsers() {
 		return service.findAll();
@@ -34,16 +39,16 @@ public class UserResource {
 	@GetMapping("/users/{id}")
 	public EntityModel<User> retrieveUser(@PathVariable int id) {
 		User user = service.findOne(id);
-		if(user == null) {
+		if (user == null) {
 			throw new UserNotFoundException("id-" + id);
 		}
-		
+
 		EntityModel<User> model = EntityModel.of(user);
-		
+
 		WebMvcLinkBuilder linkToUsers = linkTo(methodOn(this.getClass()).retrieveAllUsers());
-		
+
 		model.add(linkToUsers.withRel("all-users"));
-		
+
 		return model;
 	}
 
@@ -52,21 +57,26 @@ public class UserResource {
 		User savedUser = service.save(user);
 
 		URI location = ServletUriComponentsBuilder
-			.fromCurrentRequest()
-			.path("/{id}")
-			.buildAndExpand(savedUser.getId()).toUri();
+				.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(savedUser.getId())
+				.toUri();
 
 		return ResponseEntity.created(location).build();
 	}
-	
 
 	@DeleteMapping("/users/{id}")
 	public void deleteUser(@PathVariable int id) {
 		User user = service.deleteById(id);
-		
-		if(user == null) {
+
+		if (user == null) {
 			throw new UserNotFoundException("id-" + id);
 		}
+	}
+
+	@GetMapping("/users/internationalized-test")
+	public String internationalizedTest() {
+		return messageSource.getMessage("good.morning.message", null,
+				LocaleContextHolder.getLocale());
 	}
 
 }
