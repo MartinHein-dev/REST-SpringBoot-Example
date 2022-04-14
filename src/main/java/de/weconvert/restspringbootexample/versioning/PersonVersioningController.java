@@ -29,18 +29,18 @@ public class PersonVersioningController {
 		return new PersonV2(new Name("Bob", "Charlie"));
 	}
 	
-	
-	//Header-Versioning
-	@GetMapping(value="/person/header", headers="X-API-Version=1")
-	public PersonV1 headerV1() {
-		return new PersonV1("Bob Charlie");
-	}
-	
-	@GetMapping(value="/person/header", headers="X-API-Version=2")
-	public PersonV2 headerV2() {
-		return new PersonV2(new Name("Bob", "Charlie"));
-	}
-	
+//	
+//	//Header-Versioning
+//	@GetMapping(value="/person/header", headers="X-API-Version=1")
+//	public PersonV1 headerV1() {
+//		return new PersonV1("Bob Charlie");
+//	}
+//	
+//	@GetMapping(value="/person/header", headers="X-API-Version=2")
+//	public PersonV2 headerV2() {
+//		return new PersonV2(new Name("Bob", "Charlie"));
+//	}
+//	
 	
 	//Accept-/Header-Versioning
 	//Header: Accept application/vnd.company.app-v1+json
