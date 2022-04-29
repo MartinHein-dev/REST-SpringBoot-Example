@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class RestSpringbootExampleApplication {
 
 	
-	//Test Kommentar
+	//Test Kommentar und wieder ein update
 	public static void main(String[] args) {
 		SpringApplication.run(RestSpringbootExampleApplication.class, args);
 	}
