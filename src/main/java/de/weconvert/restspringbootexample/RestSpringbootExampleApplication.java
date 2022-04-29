@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class RestSpringbootExampleApplication {
 
-	
-	
+	// 1. Kommentar
 	// 2. Kommentar
 	public static void main(String[] args) {
 		SpringApplication.run(RestSpringbootExampleApplication.class, args);
