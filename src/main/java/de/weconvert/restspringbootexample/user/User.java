@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
@@ -18,6 +19,7 @@ public class User {
 	private Integer id;
 	
 	@Size(min = 2, message = "Name shoud have atleast 2 characters")
+	@NotNull
 	private String name;
 	
 	@Past
