@@ -5,6 +5,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Random;
 
 import javax.validation.Valid;
 
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import de.weconvert.restspringbootexample.config.TrackExecutionTime;
+
 @RestController
 public class UserResource {
 
@@ -32,11 +35,25 @@ public class UserResource {
 	private UserDaoService service;
 
 	@GetMapping("/users")
+	@TrackExecutionTime
 	public List<User> retrieveAllUsers() {
 		return service.findAll();
 	}
+	
+	@GetMapping("/users/with-delay")
+	@TrackExecutionTime
+	public List<User> longRunRetrieveAllUsers() {
+		try {
+			Thread.sleep(new Random().nextInt(100) * 10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return service.findAll();
+	}
+	
 
 	@GetMapping("/users/{id}")
+	@TrackExecutionTime
 	public EntityModel<User> retrieveUser(@PathVariable int id) {
 		User user = service.findOne(id);
 		if (user == null) {
